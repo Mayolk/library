@@ -1,0 +1,36 @@
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title {
+  font-size: 2rem;
+  padding: 2rem 0;
+}
+
+#books {
+  max-width: 720px;
+  width: 90%;
+}
+
+.book {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-header {
+  font-weight: 600;
+}
