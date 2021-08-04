@@ -1,3 +1,6 @@
+// UI pointers
+const bookListUI = document.querySelector('#book-list');
+
 let myLibrary = [];
 
 function Book(title, author, noOfPages, isRead) {
@@ -14,12 +17,36 @@ function Book(title, author, noOfPages, isRead) {
 
 const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
 
-console.log(theHobbit);
+addBookToLibrary(theHobbit);
+
+displayBooks();
+
+
+console.log(myLibrary);
+
+// Display information from myLibrary in the UI
+function displayBooks() {
+
+  myLibrary.forEach( (book) => {
+    
+    let bookUI = document.createElement('div');
+    bookUI.classList.add('book');
+
+    for (let key in book) {
+      if (key !== 'info') {
+        let para = document.createElement('p');
+        para.textContent = book[key];
+        bookUI.appendChild(para);
+      }
+    }
+
+    bookListUI.appendChild(bookUI);
+
+  });
+
+}
+
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
-
-addBookToLibrary(theHobbit);
-
-console.log(myLibrary);

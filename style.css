@@ -21,7 +21,7 @@ body {
   padding: 2rem 0;
 }
 
-#books {
+#book-list {
   max-width: 720px;
   width: 90%;
 }
