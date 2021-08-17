@@ -10,18 +10,47 @@
 
   <main id="main">
 
-      <h1 id="title">Library</h1>
+      <h1 id="project-title">Library</h1>
     
-      <div id="book-list">
+      <div class="books">
     
         <div class="book book-header">
-          <p class="book-titile">Title</p>
-          <p class="book-author">Author</p>
-          <p class="book-pages">No. of pages</p>
-          <p class="book-read">Read?</p>
-          <p class="book-remove">x</p>
+          <p class="book-info">Title</p>
+          <p class="book-info">Author</p>
+          <p class="book-info">No. of pages</p>
+          <p class="book-info">Read?</p>
         </div>
+
       </div>
+
+      <div class="books" id="book-list">
+
+      </div>
+
+      <form class="hidden" id="form">
+
+        <div class="book">
+          <input type="text" class="book-input" name="title" id="title">
+          <input type="text" class="book-input" name="author" id="author">
+          <input type="text" class="book-input" name="pages" id="pages">
+          <div class="form-group" id="read">
+            <label for="read-yes">
+              <input type="radio" name="read" id="read-yes" value="true" required>
+              Yes
+            </label>
+            <label for="read-no">
+              <input type="radio" name="read" id="read-no" value="false" checked>
+              No
+            </label>
+          </div>
+        </div>
+
+        <div id="form-buttons">
+          <input class="btn" type="submit" value="Submit">
+          <button class="btn">Cancel</button>
+        </div>
+      </form>
+        <button id="new-book" class="btn">Add new book</button>
   </main>
 
 
