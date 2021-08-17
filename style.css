@@ -41,6 +41,18 @@ body {
   font-weight: 600;
 }
 
+.book-remove {
+  height: 1.25rem;
+  color: rgb(144, 27, 27);
+  cursor: pointer;
+}
+
+.svg {
+  height: 100%;
+  width: auto;
+  fill: currentColor;
+}
+
 #form {
   margin-top: 1rem;
   max-width: 720px;

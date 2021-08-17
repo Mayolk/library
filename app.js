@@ -15,12 +15,14 @@ let myLibrary = [];
 newBookUI.addEventListener('click', revealForm);
 formUI.addEventListener('submit', createBook);
 formButtonsUI.addEventListener('mouseup', hideForm);
+bookListUI.addEventListener('mouseup', removeBook);
 
 // Event handlers
 
 function revealForm() {
   formUI.classList.remove('hidden');
   newBookUI.classList.add('hidden');
+  // formUI.reset();
 }
 
 function hideForm(e) {
@@ -42,6 +44,26 @@ function createBook(e) {
 
 }
 
+function removeBook(e) {
+  let removeID;
+  if (e.target.classList.contains('svg')) {
+    removeID = e.target.getAttribute('data-library-index');
+  } else if (e.target.parentElement.classList.contains('svg')) {
+    removeID = e.target.parentElement.getAttribute('data-library-index');
+  } else {
+    removeID = -1;
+  }
+
+  if (removeID >= 0) {
+
+    myLibrary = JSON.parse(localStorage.getItem('bookStorage'));
+    myLibrary.splice(removeID, 1);
+    localStorage.setItem('bookStorage', JSON.stringify(myLibrary));
+    displayBooks();
+  }
+}
+
+
 // constructors
 
 function Book(title, author, noOfPages, isRead) {
@@ -56,51 +78,57 @@ function Book(title, author, noOfPages, isRead) {
   }
 }
 
-// Za ukloniti
-
-const theHobbit = new Book('The Hobbit The Hobbit The Hobbit The Hobbit', 'J.R.R. Tolkien', 295, false);
-const lotr = new Book('Lord of the Rings', 'J.R.R. Tolkien', 345, true);
-
-addBookToLibrary(theHobbit);
-addBookToLibrary(lotr);
 
 // Function calls
 
 displayBooks();
 
+
 // Functions
 
 // Display information from myLibrary in the UI
 function displayBooks() {
+
+  if (localStorage.getItem('bookStorage')) {
+    
   bookListUI.textContent = '';
 
+  myLibrary = JSON.parse(localStorage.getItem('bookStorage'));
   myLibrary.forEach( (book) => {
     
     let bookUI = document.createElement('div');
     bookUI.classList.add('book');
-    bookUI.setAttribute('data-library-number', myLibrary.indexOf(book))
 
     for (let key in book) {
       if (key !== 'info') {
         let para = document.createElement('p');
         para.textContent = book[key];
         para.classList.add('book-info');
-        // para.classList.add(`book-${key}`);
         bookUI.appendChild(para);
       }
     }
 
-    let para = document.createElement('p');
-    para.classList.add('book-remove');
-    para.textContent = "x";
-    bookUI.appendChild(para);
+    let removeUI = document.createElement('div');
+    removeUI.classList.add('book-remove');
+    removeUI.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg" data-library-index="${myLibrary.indexOf(book)}">
+      <path d="M0 0h24v24H0V0z" fill="none"/>
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+    </svg>
+    `;
+    bookUI.appendChild(removeUI);
 
     bookListUI.appendChild(bookUI);
 
   });
-
+  }
 }
 
 function addBookToLibrary(book) {
+
+  if (localStorage.getItem('bookStorage')) {
+    myLibrary = JSON.parse(localStorage.getItem('bookStorage'));
+  }
   myLibrary.push(book);
+  localStorage.setItem('bookStorage', JSON.stringify(myLibrary));
 }
