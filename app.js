@@ -70,13 +70,25 @@ function Book(title, author, noOfPages, isRead) {
   this.title = title,
   this.author = author,
   this.noOfPages = noOfPages,
-  this.isRead = isRead,
-  this.info = function() {
-    let bookStatus;
-    this.isRead ? bookStatus = 'already read' : bookStatus= 'not read yet';
-    return `${this.title} by ${this.author}, ${this.noOfPages}, ${bookStatus}.`;
-  }
+  this.isRead = isRead
 }
+
+Book.prototype.info = function() {
+  let bookStatus;
+  this.isRead ? bookStatus = 'already read' : bookStatus= 'not read yet';
+  return `${this.title} by ${this.author}, ${this.noOfPages}, ${bookStatus}.`;
+};
+
+// izbaciti funkciju iz konstruktora i stavti je u prototip
+
+// dodati funkciju objektima kada ih vadimo iz JSON-a:
+// Object.createPrototype(Book), nešto tako
+
+
+// For testing (later for removal)
+
+const hobbit = new Book('The Hobbit', 'JRR Tolkien', 300, true);
+console.log(hobbit);
 
 
 // Function calls
@@ -95,6 +107,8 @@ function displayBooks() {
 
   myLibrary = JSON.parse(localStorage.getItem('bookStorage'));
   myLibrary.forEach( (book) => {
+
+    book.__proto__ = Object.create(Book.prototype);
     
     let bookUI = document.createElement('div');
     bookUI.classList.add('book');
