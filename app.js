@@ -76,7 +76,7 @@ function Book(title, author, noOfPages, isRead) {
 Book.prototype.info = function() {
   let bookStatus;
   this.isRead ? bookStatus = 'already read' : bookStatus= 'not read yet';
-  return `${this.title} by ${this.author}, ${this.noOfPages}, ${bookStatus}.`;
+  return `${this.title} by ${this.author}, ${this.noOfPages} pages, ${bookStatus}.`;
 };
 
 // izbaciti funkciju iz konstruktora i stavti je u prototip
@@ -105,10 +105,16 @@ function displayBooks() {
     
   bookListUI.textContent = '';
 
-  myLibrary = JSON.parse(localStorage.getItem('bookStorage'));
+  let tempArray = JSON.parse(localStorage.getItem('bookStorage'));
+
+  myLibrary = tempArray.map( (currentBook) => {
+    let tempBook = Object.create(Book.prototype);
+    return Object.assign(tempBook, currentBook);
+  });
+
   myLibrary.forEach( (book) => {
 
-    book.__proto__ = Object.create(Book.prototype);
+    // book.__proto__ = Object.create(Book.prototype);
     
     let bookUI = document.createElement('div');
     bookUI.classList.add('book');
