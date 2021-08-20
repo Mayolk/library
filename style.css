@@ -35,6 +35,8 @@ body {
 .book-info {
   margin-right: .5rem;
   flex: 0 1 23%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .book-header {
@@ -47,7 +49,21 @@ body {
   cursor: pointer;
 }
 
-.svg {
+.toggle-read {
+  display: block;
+  margin-right: calc(65% - 1.5rem);
+  height: 1.25rem;
+  color: rgb(4, 97, 160);
+  cursor: pointer;
+}
+
+.svg-remove {
+  height: 100%;
+  width: auto;
+  fill: currentColor;
+}
+
+.svg-update {
   height: 100%;
   width: auto;
   fill: currentColor;
