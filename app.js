@@ -37,7 +37,7 @@ function createBook(e) {
 
   e.preventDefault();
 
-  let newBook = new Book(formTitleUI.value, formAuthorUI.value, formPagesUI.value, formReadUI.querySelector('input[name="read"]:checked').value);
+  let newBook = new Book(formTitleUI.value, formAuthorUI.value, parseInt(formPagesUI.value), formReadUI.querySelector('input[name="read"]:checked').value);
 
   addBookToLibrary(newBook);
   displayBooks();
@@ -75,7 +75,7 @@ function Book(title, author, noOfPages, isRead) {
 
 Book.prototype.info = function() {
   let bookStatus;
-  this.isRead ? bookStatus = 'already read' : bookStatus= 'not read yet';
+  this.isRead.toString() === "true" ? bookStatus = 'already read' : bookStatus= 'not read yet';
   return `${this.title} by ${this.author}, ${this.noOfPages} pages, ${bookStatus}.`;
 };
 
@@ -103,44 +103,44 @@ function displayBooks() {
 
   if (localStorage.getItem('bookStorage')) {
     
-  bookListUI.textContent = '';
+    bookListUI.textContent = '';
 
-  let tempArray = JSON.parse(localStorage.getItem('bookStorage'));
+    let tempArray = JSON.parse(localStorage.getItem('bookStorage'));
 
-  myLibrary = tempArray.map( (currentBook) => {
-    let tempBook = Object.create(Book.prototype);
-    return Object.assign(tempBook, currentBook);
-  });
+    myLibrary = tempArray.map( (currentBook) => {
+      let tempBook = Object.create(Book.prototype);
+      return Object.assign(tempBook, currentBook);
+    });
 
-  myLibrary.forEach( (book) => {
+    myLibrary.forEach( (book) => {
 
-    // book.__proto__ = Object.create(Book.prototype);
-    
-    let bookUI = document.createElement('div');
-    bookUI.classList.add('book');
+      // book.__proto__ = Object.create(Book.prototype);
+      
+      let bookUI = document.createElement('div');
+      bookUI.classList.add('book');
 
-    for (let key in book) {
-      if (key !== 'info') {
-        let para = document.createElement('p');
-        para.textContent = book[key];
-        para.classList.add('book-info');
-        bookUI.appendChild(para);
+      for (let key in book) {
+        if (key !== 'info') {
+          let para = document.createElement('p');
+          para.textContent = book[key];
+          para.classList.add('book-info');
+          bookUI.appendChild(para);
+        }
       }
-    }
 
-    let removeUI = document.createElement('div');
-    removeUI.classList.add('book-remove');
-    removeUI.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg" data-library-index="${myLibrary.indexOf(book)}">
-      <path d="M0 0h24v24H0V0z" fill="none"/>
-      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
-    </svg>
-    `;
-    bookUI.appendChild(removeUI);
+      let removeUI = document.createElement('div');
+      removeUI.classList.add('book-remove');
+      removeUI.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg" data-library-index="${myLibrary.indexOf(book)}">
+        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+      </svg>
+      `;
+      bookUI.appendChild(removeUI);
 
-    bookListUI.appendChild(bookUI);
+      bookListUI.appendChild(bookUI);
 
-  });
+    });
   }
 }
 
