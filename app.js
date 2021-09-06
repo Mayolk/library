@@ -90,26 +90,47 @@ function updateReadStatus(e) {
 }
 
 
-// Constructors
+// Class
 
-function Book(title, author, noOfPages, isRead) {
-  this.title = title,
-  this.author = author,
-  this.noOfPages = noOfPages,
-  this.isRead = isRead
+class Book {
+
+  constructor(title, author, noOfPages, isRead) {
+    this.title = title,
+    this.author = author,
+    this.noOfPages = noOfPages,
+    this.isRead = isRead
+  }
+
+  get title() {
+    return this._title;
+  }
+
+  set title(value) {
+    this._title = value;
+  }
+
+  info () {
+    let bookStatus;
+    this.isRead.toString() === "true" ? bookStatus = 'already read' : bookStatus= 'not read yet';
+    return `${this.title} by ${this.author}, ${this.noOfPages} pages, ${bookStatus}.`;
+  }
+
 }
 
-Book.prototype.info = function() {
-  let bookStatus;
-  this.isRead.toString() === "true" ? bookStatus = 'already read' : bookStatus= 'not read yet';
-  return `${this.title} by ${this.author}, ${this.noOfPages} pages, ${bookStatus}.`;
-};
+// Constructor & proto method
 
-// For testing (later for removal)
+// function Book(title, author, noOfPages, isRead) {
+//   this.title = title,
+//   this.author = author,
+//   this.noOfPages = noOfPages,
+//   this.isRead = isRead
+// }
 
-const hobbit = new Book('The Hobbit', 'JRR Tolkien', 300, true);
-console.log(hobbit);
-
+// Book.prototype.info = function() {
+//   let bookStatus;
+//   this.isRead.toString() === "true" ? bookStatus = 'already read' : bookStatus= 'not read yet';
+//   return `${this.title} by ${this.author}, ${this.noOfPages} pages, ${bookStatus}.`;
+// };
 
 // Function calls
 
@@ -126,6 +147,7 @@ function displayBooks() {
 
     let tempArray = JSON.parse(localStorage.getItem('bookStorage'));
 
+    // Each object (book) in myLibrary gets Book.prototype
     myLibrary = tempArray.map( (currentBook) => {
       let tempBook = Object.create(Book.prototype);
       return Object.assign(tempBook, currentBook);
